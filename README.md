@@ -1,0 +1,2 @@
+camunda-cockpit-plugins
+=======================
