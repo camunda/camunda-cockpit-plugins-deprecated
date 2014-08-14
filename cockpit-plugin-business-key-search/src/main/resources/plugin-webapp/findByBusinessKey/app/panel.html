@@ -1,0 +1,59 @@
+<div ng-controller="FindByBusinessKeyController">
+    <div class="page-header">
+        <h1>Find by business key</h1>
+    </div>
+
+    <form class="form-inline" ng-submit="findByBusinessKey();">
+        <div class="control-group">
+            <input type="text" class="form-control" id="businessKey" placeholder="business key"
+                   ng-model="businessKey" required/>
+            <button type="submit" name="Search" class="btn">Search</button>
+        </div>
+    </form>
+
+    <div>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <th>Started</th>
+            <th>Completed</th>
+            <th>Business Key</th>
+            <th>Process Instance</th>
+            <th>Process Definition</th>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="processInstance in historicProcessInstancesByBusinessKey">
+                <td>
+                    {{ processInstance.startTime}}
+                </td>
+                <td>
+                    {{ processInstance.endTime}}
+                </td>
+                <td>
+                    {{ processInstance.businessKey}}
+                </td>
+                <td>
+                    <a ng-if="!processInstance.endTime" href="#/process-instance/{{ processInstance.id }}">
+                        {{ processInstance.id | shorten:8 }}<i class="icon-tasks"></i>
+                    </a>
+                    <a ng-if="processInstance.endTime" href="#/process-instance/{{ processInstance.id }}/history">
+                        {{ processInstance.id | shorten:8 }}<i class="icon-info-sign"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="#/process-definition/{{ processInstance.processDefinitionId }}">
+                        {{ processInstance.processDefinitionId | shorten:25 }}
+                    </a>
+                </td>
+            </tr>
+
+            <tr ng-if="historicProcessInstancesByBusinessKey && !historicProcessInstancesByBusinessKey.length"
+                class="info">
+                <td colspan="5">
+                    No process instances found for this business key!
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
