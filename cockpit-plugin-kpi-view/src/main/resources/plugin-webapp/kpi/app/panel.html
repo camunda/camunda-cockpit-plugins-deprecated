@@ -1,0 +1,47 @@
+<div ng-controller="ShowKPIController">
+
+    <form class="form-inline" ng-submit="showKPI();">
+        <div class="control-group">
+            <label class="control-label" for="fromDate">From Date</label>
+            <input type="date" class="form-control" id="fromDate" placeholder="yyyy-mm-dd"
+                   ng-model="KpiStartDate" required/>
+            <label class="control-label" for="toDate">To Date</label>
+            <input type="date" class="form-control" id="toDate"  placeholder="yyyy-mm-dd"
+                   ng-model="KpiEndDate" required/>
+            <button type="submit" name="Update" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+
+    
+        <div>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <th>Stage</th>
+            <th>Count</th>
+            <th>Average Duration</th>
+            <th>Maximum Duration</th>                                    
+            </thead>
+            <tbody>
+            <tr ng-repeat="kpi in KPIs">
+                <td>
+                    {{kpi.stage}}
+                </td>
+                <td>
+                    {{kpi.instanceCount}}
+                </td>
+                <td>
+                    {{kpi.averageDuration}}
+                </td>
+                <td>
+                    {{kpi.maxDuration}}
+                </td>                                
+            </tr>
+            <tr ng-if="KPIs && !KPIs.length"
+                class="info">
+                <td colspan="4">
+                    No KPI values found!
+                </td>
+            </tr>            
+        </table>
+    </div>
+</div>

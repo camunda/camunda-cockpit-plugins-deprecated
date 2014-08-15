@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cockpit.kpi">
+
+  <resultMap id="KPIMap" type="org.camunda.bpm.demo.cockpit.plugin.kpis.KPIDto">
+    <result property="processDefinitionKey" column="Process_Key" />
+    <result property="stage" column="Stage" />
+    <result property="instanceCount" column="Process_Instances" />
+    <result property="averageDuration" column="Average_Duration"/>
+    <result property="maxDuration" column="Max_Duration"/>
+  </resultMap>
+
+  <select id="selectKPIByProcessDefinition" parameterType="org.camunda.bpm.demo.cockpit.plugin.kpi.resources.KPIQueryParameters" resultMap="KPIMap">
+SELECT 
+    Process_Definition.KEY_ as Process_Key,
+    concat(Currnt.ACT_NAME_,
+            ' -- ',
+            Subsequent.ACT_NAME_) as Stage,
+    Count(*) as Process_Instances,
+    avg(timestampdiff(SECOND,
+        Currnt.START_TIME_,
+        Subsequent.END_TIME_)) as Average_Duration,
+    max(timestampdiff(SECOND,
+        Currnt.START_TIME_,
+        Subsequent.END_TIME_)) as Max_Duration
+FROM
+    act_hi_actinst Subsequent,
+    act_hi_actinst Currnt,
+    act_re_procdef Process_Definition,
+    act_hi_procinst Process_Instance
+where
+        Process_Instance.Start_Time_ &gt;= #{startDate}
+        and Process_Instance.Start_Time_ &lt;= #{endDate}
+		and Process_Instance.ID_ = Subsequent.PROC_INST_ID_
+        and Subsequent.ACT_TYPE_ = 'intermediateThrowEvent'
+        and Subsequent.ACT_NAME_ like 'KPI:%'
+        and Currnt.PROC_INST_ID_ = Subsequent.PROC_INST_ID_
+        and Currnt.EXECUTION_ID_ = Subsequent.EXECUTION_ID_
+        and Currnt.PROC_INST_ID_ = Process_Instance.ID_
+        and Currnt.PROC_DEF_ID_ = Process_Definition.ID_
+        and Process_Definition.key_ = #{processKey}
+        and Currnt.ID_ = (select 
+            Precedent.ID_
+        from
+            act_hi_actinst Precedent
+        where
+            Precedent.PROC_INST_ID_ = Subsequent.PROC_INST_ID_
+                and Precedent.EXECUTION_ID_ = Subsequent.EXECUTION_ID_
+                and Precedent.ACT_NAME_ like 'KPI:%'
+                and Precedent.END_TIME_ &lt;= Subsequent.START_TIME_
+                and Precedent.ID_ &lt;&gt; Subsequent.ID_
+        order by Precedent.END_TIME_ desc
+        limit 1)
+group by Process_Key , Stage
+order by Average_Duration desc;
+  </select>
+
+</mapper>
