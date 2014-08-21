@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>Camunda Cockpit Plugin: KPI View Sample</name>
-  <description>Migrate process instances to a new version of the process definition.</description>
+  <description>Example view to visualize KPI's defined by BPMN Events in the process model.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

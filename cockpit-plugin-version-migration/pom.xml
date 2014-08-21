@@ -15,7 +15,7 @@
     <camunda.version>7.1.0-Final</camunda.version>
 
     <!-- This property must be present for the pom.xml to be recognized as a plugin -->
-    <camunda.plugin.category>Operations</camunda.plugin.category>
+    <Xcamunda.plugin.category>Operations</Xcamunda.plugin.category>
 
     <camunda.plugin.screenshot>screenshot.png</camunda.plugin.screenshot>
     <camunda.plugin.testedOnVersion>7.1.0-Final</camunda.plugin.testedOnVersion>
