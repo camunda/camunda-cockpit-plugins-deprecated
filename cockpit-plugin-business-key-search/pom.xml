@@ -9,6 +9,10 @@
 
   <name>Camunda Cockpit Plugin: Find by business key</name>
   <description>Search for all process instances in the history data (independant of process definition) with a given business key.</description>
+  <developers>
+    <developer><name>Bernd Ruecker</name></developer>
+    <developer><name>Ingo Richtsmeier</name></developer>
+  </developers>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -83,4 +87,8 @@
       <url>https://app.camunda.com/nexus/content/groups/public</url>
     </repository>
   </repositories>
+    <organization>
+    	<name>Camunda</name>
+    	<url>www.camunda.com</url>
+    </organization>
 </project>
