@@ -1,6 +1,6 @@
 ngDefine('cockpit.plugin.findByBusinessKey', function(module) {
 
-    // define Angular ressource for REST communication
+    // define Angular resource for REST communication
 
     var HistoryResource = function ($resource, Uri) {
         return $resource('/engine-rest/history/process-instance',
@@ -9,9 +9,16 @@ ngDefine('cockpit.plugin.findByBusinessKey', function(module) {
             });
     };
     module.factory('FindHistoryByBusinessKeyResource', HistoryResource);
+    
+    var ProcessDefinitionResource = function($resource, Uri) {
+    	return $resource('/engine-rest/process-definition/:processDefinitionId',
+    			{processDefinitionId: '@processDefinitionId'},
+    			{query: {method: 'GET', isArray: false}})
+    };
+    module.factory('GetProcessDefinitionResource', ProcessDefinitionResource);
 
     // create controller to load data for HTML
-    function FindByBusinessKeyController ($scope, FindHistoryByBusinessKeyResource) {
+    function FindByBusinessKeyController ($scope, FindHistoryByBusinessKeyResource, GetProcessDefinitionResource) {
         // input: processInstance
 
 
@@ -23,12 +30,18 @@ ngDefine('cockpit.plugin.findByBusinessKey', function(module) {
             FindHistoryByBusinessKeyResource.query({processInstanceBusinessKeyLike: $scope.businessKey}).$then(function(response) {
                 $scope.historicProcessInstancesByBusinessKey = null;
                 $scope.historicProcessInstancesByBusinessKey = response.data;
+                
+                angular.forEach($scope.historicProcessInstancesByBusinessKey, function(processInstance) {
+                	var procDefId = processInstance.processDefinitionId;
+                	GetProcessDefinitionResource.query({processDefinitionId: procDefId}).$then(function(response) {
+                		processInstance.name = response.data.name;
+                	})
+                 });
             });
-
         };
 
     };
-    module.controller('FindByBusinessKeyController', [ '$scope', 'FindHistoryByBusinessKeyResource',FindByBusinessKeyController ]);
+    module.controller('FindByBusinessKeyController', [ '$scope', 'FindHistoryByBusinessKeyResource','GetProcessDefinitionResource', FindByBusinessKeyController ]);
 
 
     // register Plugin

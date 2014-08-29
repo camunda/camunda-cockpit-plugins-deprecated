@@ -17,6 +17,7 @@
             <th>Started</th>
             <th>Completed</th>
             <th>Business Key</th>
+            <th>Process Name</th>
             <th>Process Instance</th>
             <th>Process Definition</th>
             </thead>
@@ -31,6 +32,9 @@
                 </td>
                 <td>
                     {{ processInstance.businessKey}}
+                </td>
+                <td>
+                    {{ processInstance.name }}
                 </td>
                 <td>
                     <a ng-if="!processInstance.endTime" href="#/process-instance/{{ processInstance.id }}">
