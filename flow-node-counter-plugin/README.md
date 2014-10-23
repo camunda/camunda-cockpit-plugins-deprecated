@@ -35,7 +35,7 @@ Discover more Cockpit plugins in the
 [Camunda Plugin Store](http://camunda.org/plugins/)
 
 
-License
--------
+Screenshot
+----------
 
-[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+![Screenshot](screenshot.png)
