@@ -1,0 +1,22 @@
+<div>
+  <h1>Flow Node Instance Counter</h1>
+  Number of flow node instances since {{ previous }} (last 30 days): <b>{{ activityInstanceCounts.count }}</b>
+  <h4>Flow node instance count of the last months</h4>
+    <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Year</th>
+        <th>Flow Node Instances</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="flowNodeInstances in flowNodeInstancesPerMonth">
+        <td>{{ flowNodeInstances.month }}</td>
+        <td>{{ flowNodeInstances.year }}</td>
+        <td>{{ flowNodeInstances.flowNodeInstanceCount }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
