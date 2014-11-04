@@ -9,6 +9,7 @@
 
   <name>Camunda Cockpit Plugin: KPI View Sample</name>
   <description>Example view to visualize KPI's defined by BPMN Events in the process model.</description>
+  <url>http://blog.novatec-gmbh.de/camunda-cockpit-statistics-plugin/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
