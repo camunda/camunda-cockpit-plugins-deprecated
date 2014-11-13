@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cockpit.flow-node-instance-counter-plugin">
+
+  <resultMap id="flowNodeInstanceCountMap" type="org.camunda.consulting.cockpit.flowNodeInstanceCounterPlugin.db.FlowNodeInstanceCountDto">
+    <result property="month" column="MONTH_" jdbcType="VARCHAR" />
+    <result property="year" column="YEAR_" jdbcType="VARCHAR"/>
+    <result property="flowNodeInstanceCount" column="FLOWNODE_INSTANCE_COUNT_" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectFlowNodeInstanceCountPerMonth" resultMap="flowNodeInstanceCountMap">
+SELECT monthname(start_time_) as month_, year(start_time_) as year_, count(month(start_time_)) as flownode_instance_count_
+FROM ACT_HI_ACTINST 
+group by year(start_time_), month(start_time_), monthname(start_time_)
+order by year(start_time_), month(start_time_) desc
+  </select>
+
+</mapper>
