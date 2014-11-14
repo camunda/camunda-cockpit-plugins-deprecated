@@ -9,7 +9,7 @@
 		<os family="windows"/>
 	</condition>
 
-	<target name="deploy.jboss" depends="package.mvn, install.cockpit.plugin" description="Copies the cockit plugin to the deployment directory defined in '${basedir}/build.properties' or '${user.home}/.camunda/build.properties'" />
+	<target name="deploy.jboss" depends="package.mvn, install.engine.plugin" description="Copies the engine plugin to the deployment directory defined in '${basedir}/build.properties' or '${user.home}/.camunda/build.properties'" />
 
 	<target name="package.mvn">
 		<exec executable="${mvn.executable}" dir="." failonerror="true">
@@ -18,14 +18,17 @@
 		</exec>
 	</target>
 
-	<target name="install.cockpit.plugin">
+	<target name="install.engine.plugin">
 		<fail unless="deploy.jboss.dir" message="No deployment folder has been configured. Please copy the file '${basedir}/build.properties.example' to '${basedir}/build.properties' or '${user.home}/.camunda/build.properties' and change it according to your environment." />
-		<path id="cockpit.file.id"> 
-		    <fileset dir="${deploy.jboss.dir}"> 
-		        <include name="camunda-webapp-*jboss-*.war"/> 
+		<path id="module.xml.file.id"> 
+		    <fileset dir="${deploy.jboss.dir}/../../modules/org/camunda/bpm/camunda-engine/main"> 
+		        <include name="module.xml"/> 
 		     </fileset> 
 		</path> 
-		<property name="cockpit.file" refid="cockpit.file.id"/> 
+		<property name="module.xml.file" refid="module.xml.file.id"/>
+		<replace file="${module.xml.file}"
+		         token="&lt;/resources&gt;" 
+		         value="  %lt;resource-root path=\"${ant.project.name}.jar\" /&gt; &lt;/resources&gt;"/> module.xml.file.id>
 		<war destfile="${cockpit.file}" update="true">
 			<zipfileset file="${target.dir}/${ant.project.name}.jar" fullpath="WEB-INF/lib/${ant.project.name}.jar" />
 		</war>
