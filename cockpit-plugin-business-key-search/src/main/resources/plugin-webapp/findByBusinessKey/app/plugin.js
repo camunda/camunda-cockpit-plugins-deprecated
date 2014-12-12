@@ -27,14 +27,14 @@ ngDefine('cockpit.plugin.findByBusinessKey', function(module) {
         $scope.businessKey = null;
 
         $scope.findByBusinessKey = function() {
-            FindHistoryByBusinessKeyResource.query({processInstanceBusinessKeyLike: $scope.businessKey}).$then(function(response) {
+            FindHistoryByBusinessKeyResource.query({processInstanceBusinessKeyLike: '%' + $scope.businessKey + '%'}).$promise.then(function(response) {
                 $scope.historicProcessInstancesByBusinessKey = null;
-                $scope.historicProcessInstancesByBusinessKey = response.data;
+                $scope.historicProcessInstancesByBusinessKey = response;
                 
                 angular.forEach($scope.historicProcessInstancesByBusinessKey, function(processInstance) {
                 	var procDefId = processInstance.processDefinitionId;
-                	GetProcessDefinitionResource.query({processDefinitionId: procDefId}).$then(function(response) {
-                		processInstance.name = response.data.name;
+                	GetProcessDefinitionResource.query({processDefinitionId: procDefId}).$promise.then(function(response) {
+                		processInstance.name = response.name;
                 	})
                  });
             });
