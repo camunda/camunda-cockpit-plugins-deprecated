@@ -1,0 +1,28 @@
+<div>
+  <h1>Rest Client</h1>
+  <form class="form-inline" ng-submit="executeRestRequest();">
+      <div>
+	      URL: <input ng-model="restRequest.url"></input>
+		  Method: <select ng-model="restRequest.method">
+		    <option>GET</option>
+		    <option>POST</option>
+		  </select>
+          <button type="submit" name="execute" class="btn btn-primary">execute</button>
+      </div>
+	  <textarea ng-model="restRequest.payload" cols="50" rows="10"></textarea>
+  </form>
+  <div>
+	<table class="table table-bordered table-hover table-condensed">
+	  <tbody>
+	    <tr>
+	      <td>Response Code</td>
+	      <td>{{restResponse.httpCode}}</td>
+	    </tr>
+	    <tr>
+	      <td>Content</td>
+	      <td>{{restResponse.payload}}</td>
+	    </tr>
+	  </tbody>
+	</table>
+  </div>
+</div>
