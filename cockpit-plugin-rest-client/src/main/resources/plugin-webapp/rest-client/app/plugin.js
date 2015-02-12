@@ -22,7 +22,7 @@ ngDefine('cockpit.plugin.rest-client', function(module) {
       controller: RestClientController,
 
       // make sure we have a higher priority than the default plugin
-      priority: 12
+      priority: -10
     });
   };
 
