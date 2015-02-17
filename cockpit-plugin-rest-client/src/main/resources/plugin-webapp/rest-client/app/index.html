@@ -1,17 +1,72 @@
-<div>
-  <h1>Rest Client</h1>
-  <form class="form-inline" ng-submit="executeRestRequest();">
-      <div>
-	      URL: <input ng-model="restRequest.url"></input>
-		  Method: <select ng-model="restRequest.method">
+<h1>Rest Client</h1>
+  
+<form class="form-inline" ng-submit="executeRestRequest();">
+<div class="row">
+   <div class="span9">
+   URL: 
+   </div>
+   <div class="span2">
+   Method:
+   </div>
+</div>
+<div class="row">
+</div>
+<div class="row">
+   <div class="span9">
+	  <input ng-model="restRequest.url"  class="input-block-level"></input>
+   </div>
+   <div class="span2">
+		  <select class="input-block-level" ng-model="restRequest.method">
 		    <option>GET</option>
 		    <option>POST</option>
 		  </select>
+   </div>
+   <div class="span1">
           <button type="submit" name="execute" class="btn btn-primary">execute</button>
-      </div>
-	  <textarea ng-model="restRequest.payload" cols="50" rows="10"></textarea>
-  </form>
-  <div>
+   </div>
+</div>
+
+
+<div class="row">
+   <div class="span6">
+     Payload:
+   </div>
+   <div class="span6">
+     Sample Requests:
+   </div>
+</div>
+
+<div class="row">
+   <div class="span6">
+	  <textarea ng-model="restRequest.payload" rows="10" class="input-block-level"></textarea>
+   </div>
+   <div class="span6">
+      
+		Correlate Message
+        <p>
+          	<ul>
+          	  <li ng-repeat="message in messages"><a data-ng-click="selectMessage(message.name)">{{message.name}}</a></li>                  	  
+          	</ul>
+        </p>
+        
+        Start Process Instance
+        <p>
+          	<ul>
+          	  <li ng-repeat="processDefinition in processDefinitions"><a data-ng-click="selectProcessDefiniton(processDefinition)">{{processDefinition.name}} (Version {{processDefinition.version}})</a></li>                  	  
+          	</ul>
+        </p>
+      
+      
+   </div>
+</div>
+</form>
+<div class="row">
+  <div class="span12">
+	Response:
+  </div>
+</div>
+<div class="row">
+  <div class="span12">
 	<table class="table table-bordered table-hover table-condensed">
 	  <tbody>
 	    <tr>
