@@ -3,7 +3,7 @@ ngDefine('cockpit.plugin.kpi', function(module) {
     // define Angular resource for REST communication
 
     var KPIResource = function ($resource, Uri) {
-        return $resource('/camunda/api/cockpit/plugin/kpi/default/kpi',
+        return $resource('/camunda/api/cockpit/plugin/kpi/:engine/kpi',
             {},
             {getKPIs: { method: 'GET', isArray: true, params:{processKey: '', startDate: '', endDate: ''}}
             });

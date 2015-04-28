@@ -4,13 +4,13 @@ ngDefine('cockpit.plugin.flow-node-instance-counter-plugin', function(module) {
 
 	var today = new Date();
 	var previous = new Date().setDate(today.getDate() - 30);
-    $http.get(Uri.appUri("engine://engine/default/history/activity-instance/count?startedAfter="
+    $http.get(Uri.appUri("engine://engine/:engine/history/activity-instance/count?startedAfter="
     		+ new Date(previous).toISOString()))
       .success(function(data) {
         $scope.activityInstanceCounts = data;
         $scope.previous = new Date(previous).toLocaleDateString();
       });
-    $http.get(Uri.appUri("plugin://flow-node-instance-counter-plugin/default/flow-node-instance-count-per-month"))
+    $http.get(Uri.appUri("plugin://flow-node-instance-counter-plugin/:engine/flow-node-instance-count-per-month"))
     	.success(function(data) {
     		$scope.flowNodeInstancesPerMonth = data
 		});
