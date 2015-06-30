@@ -17,41 +17,44 @@ import org.camunda.bpm.demo.cockpit.plugin.kpis.KPIDto;
 public class KPIResource extends AbstractCockpitPluginResource {
   
   protected static final Logger LOGGER = Logger.getLogger(KPIResource.class.getName());
+  private final static long END_OF_DAY = 1000*60*60*24-1;
 
-	public KPIResource(String engineName) {
-		super(engineName);
-	}
+  public KPIResource(String engineName) {
+    super(engineName);
+  }
 
-	@GET
-	public List<KPIDto> getKPIs(@QueryParam("processKey") String processKey,
-			@QueryParam("startDate") String startDateStr,
-			@QueryParam("endDate") String endDateStr) {
+  @GET
+  public List<KPIDto> getKPIs(@QueryParam("processKey") String processKey,
+      @QueryParam("startDate") String startDateStr,
+      @QueryParam("endDate") String endDateStr) {
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
-		KPIQueryParameters parameter = new KPIQueryParameters();
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");		
+    KPIQueryParameters parameter = new KPIQueryParameters();
 
-		try {
-			parameter.setStartDate(df.parse(startDateStr));
-			parameter.setEndDate(df.parse(endDateStr));		
-		}
-		catch(Exception ex)
-		{
-		  LOGGER.log(Level.WARNING, "could not parse date", ex);
-		  Calendar calendar = Calendar.getInstance();
-		  
-		  // default
-		  calendar.add(Calendar.DAY_OF_YEAR, -1);
-		  parameter.setStartDate(calendar.getTime());
-		  
+    try {
+      parameter.setStartDate(df.parse(startDateStr));
+      Date endDate = df.parse(endDateStr);
+      parameter.setEndDate(new Date(endDate.getTime() + END_OF_DAY));
+    }
+    catch(Exception ex)
+    {
+      LOGGER.log(Level.WARNING, "could not parse date", ex);
+      Calendar calendar = Calendar.getInstance();
+
+      // default
+      calendar.add(Calendar.DAY_OF_YEAR, -1);
+      parameter.setStartDate(calendar.getTime());
+
       calendar.add(Calendar.DAY_OF_YEAR, 2);
       parameter.setEndDate(calendar.getTime());			
-		}
-		
-		parameter.setProcessKey(processKey);
-		
-		return getQueryService().executeQuery(
-				"cockpit.kpi.selectKPIByProcessDefinition",
-				// TODO: Null possible?
-				parameter);
-	}
+    }
+
+    parameter.setProcessKey(processKey);
+    LOGGER.fine("query with parameters: " + parameter);
+
+    return getQueryService().executeQuery(
+        "cockpit.kpi.selectKPIByProcessDefinition",
+        // TODO: Null possible?
+        parameter);
+  }
 }

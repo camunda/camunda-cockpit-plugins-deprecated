@@ -19,7 +19,7 @@
     <camunda.plugin.category>Sample</camunda.plugin.category>
 
     <camunda.plugin.screenshot>screenshot.png</camunda.plugin.screenshot>
-    <camunda.plugin.testedOnVersion>7.1.0-Final</camunda.plugin.testedOnVersion>
+    <camunda.plugin.testedOnVersion>7.3.0</camunda.plugin.testedOnVersion>
     <camunda.plugin.language>EN</camunda.plugin.language>
     <camunda.plugin.exampleProcessApplicationUrl>https://github.com/camunda/camunda-cockpit-plugins/tree/master/cockpit-plugin-kpi-view-pa-sample</camunda.plugin.exampleProcessApplicationUrl>
   </properties>

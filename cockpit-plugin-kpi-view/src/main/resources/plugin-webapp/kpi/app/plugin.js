@@ -14,8 +14,16 @@ define(['angular'], function(angular) {
         $scope.KpiStartDate = new Date(date.getFullYear(), date.getMonth(), 1).toISOString().slice(0, 10);
         $scope.KpiEndDate = new Date().toISOString().slice(0, 10);
         
+        // initial query
+        KPIResource.query({processKey: $scope.processDefinition.key, startDate:$scope.KpiStartDate, endDate:$scope.KpiEndDate}).$promise.then(function(response) {
+          console.log("first response: " + response);
+          $scope.KPIs = null;
+          $scope.KPIs = response;
+        });
         console.log("show kpis for " + $scope.KpiStartDate + " " +$scope.KpiEndDate + " " + $scope.processDefinition.key);
-        $scope.showKPI = function() {
+        
+        // update function - called from the form
+        $scope.updateKPI = function() {
             KPIResource.query({processKey: $scope.processDefinition.key, startDate:$scope.KpiStartDate, endDate:$scope.KpiEndDate}).$promise.then(function(response) {
                 console.log("response: " + response);
                 $scope.KPIs = null;
@@ -37,7 +45,6 @@ define(['angular'], function(angular) {
             priority: 20
         });
     };
-
     Configuration.$inject = ['ViewsProvider'];
 
     var ngModule = angular.module('cockpit.plugin.kpi', []);
