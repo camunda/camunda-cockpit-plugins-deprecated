@@ -3,10 +3,8 @@ ngDefine('cockpit.plugin.kpi', function(module) {
     // define Angular resource for REST communication
 
     var KPIResource = function ($resource, Uri) {
-        return $resource('/camunda/api/cockpit/plugin/kpi/:engine/kpi',
-            {},
-            {getKPIs: { method: 'GET', isArray: true, params:{processKey: '', startDate: '', endDate: ''}}
-            });
+        return $resource(Uri.appUri('plugin://kpi/:engine/kpi',
+            {processKey: '@processKey', startDate: '@startDate', endDate: '@endDate'}));
     };
     module.factory('KPIResource', KPIResource);
 
@@ -17,19 +15,22 @@ ngDefine('cockpit.plugin.kpi', function(module) {
         $scope.KPIs = null;
 
         var date = new Date();
-        $scope.KpiStartDate = new Date(date.getFullYear(), date.getMonth(), 1);
-        $scope.KpiEndDate = new Date();
-
+        $scope.KpiStartDate = new Date(date.getFullYear(), date.getMonth(), 1).toISOString().slice(0, 10);
+        $scope.KpiEndDate = new Date().toISOString().slice(0, 10);
+        
+        console.log("show kpis for " + $scope.KpiStartDate + " " +$scope.KpiEndDate + " " + $scope.processDefinition.key);
         $scope.showKPI = function() {
-            KPIResource.getKPIs({processKey: $scope.processDefinition.key, startDate:$scope.KpiStartDate, endDate:$scope.KpiEndDate}).$then(function(response) {
+            KPIResource.query({processKey: $scope.processDefinition.key, startDate:$scope.KpiStartDate, endDate:$scope.KpiEndDate}).$promise.then(function(response) {
+                console.log("response: " + response);
                 $scope.KPIs = null;
-                $scope.KPIs = response.data;
+                $scope.KPIs = response;
             });
 
         };
+        console.log("kpi rest result: " + $scope.KPIs);
 
     };
-    module.controller('ShowKPIController', [ '$scope', 'KPIResource',ShowKPIController ]);
+    module.controller('ShowKPIController', [ '$scope', 'KPIResource', ShowKPIController ]);
 
 
     // register Plugin

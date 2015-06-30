@@ -36,4 +36,10 @@ public class KPIQueryParameters extends QueryParameters<KPIDto> {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+  @Override
+  public String toString() {
+    return "KPIQueryParameters [startDate=" + startDate + ", endDate=" + endDate + ", processKey=" + processKey + "]";
+  }
+	
+	
 }

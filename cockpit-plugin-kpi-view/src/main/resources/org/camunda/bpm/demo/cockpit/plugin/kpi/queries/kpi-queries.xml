@@ -34,7 +34,7 @@ where
         Process_Instance.Start_Time_ &gt;= #{startDate}
         and Process_Instance.Start_Time_ &lt;= #{endDate}
 		and Process_Instance.ID_ = Subsequent.PROC_INST_ID_
-        and Subsequent.ACT_TYPE_ = 'intermediateThrowEvent'
+        and Subsequent.ACT_TYPE_ = 'intermediateNoneThrowEvent'
         and Subsequent.ACT_NAME_ like 'KPI:%'
         and Currnt.PROC_INST_ID_ = Subsequent.PROC_INST_ID_
         and Currnt.EXECUTION_ID_ = Subsequent.EXECUTION_ID_
