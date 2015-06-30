@@ -3,7 +3,7 @@ How to measure special KPIs
 
 This cockpit plugin shows how you could count and evaluate special Key Performance Indicators from your processes.
 
-The plugin relies on none intermediate events with a name started by 'KPI:'. The complete logic is in the [database query](src/main/resources/org/camunda/bpm/demo/cockpit/plugin/kpi/queries/kpi-queries.xml) and you can adjust it for your needs.
+The plugin relies on intermediate none events with a name started by 'KPI:'. The complete logic is in the [database query](src/main/resources/org/camunda/bpm/demo/cockpit/plugin/kpi/queries/kpi-queries.xml) and you can adjust it for your needs.
 
 In this example, the query calculates the time elapsed between KPI-Events while the process instance is executed.
 
