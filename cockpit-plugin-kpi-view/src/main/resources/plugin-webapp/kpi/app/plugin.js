@@ -1,17 +1,13 @@
-ngDefine('cockpit.plugin.kpi', function(module) {
+define(['angular'], function(angular) {
 
     // define Angular resource for REST communication
-
     var KPIResource = function ($resource, Uri) {
         return $resource(Uri.appUri('plugin://kpi/:engine/kpi',
             {processKey: '@processKey', startDate: '@startDate', endDate: '@endDate'}));
     };
-    module.factory('KPIResource', KPIResource);
 
     // create controller to load data for HTML
     function ShowKPIController ($scope, KPIResource) {
-        // input: processInstance
-
         $scope.KPIs = null;
 
         var date = new Date();
@@ -25,12 +21,9 @@ ngDefine('cockpit.plugin.kpi', function(module) {
                 $scope.KPIs = null;
                 $scope.KPIs = response;
             });
-
         };
         console.log("kpi rest result: " + $scope.KPIs);
-
     };
-    module.controller('ShowKPIController', [ '$scope', 'KPIResource', ShowKPIController ]);
 
 
     // register Plugin
@@ -47,5 +40,11 @@ ngDefine('cockpit.plugin.kpi', function(module) {
 
     Configuration.$inject = ['ViewsProvider'];
 
-    module.config(Configuration);
+    var ngModule = angular.module('cockpit.plugin.kpi', []);
+
+    ngModule.config(Configuration);
+    ngModule.factory('KPIResource', KPIResource);
+    ngModule.controller('ShowKPIController', [ '$scope', 'KPIResource', ShowKPIController ]);
+
+    return ngModule;    
 });
