@@ -1,3 +1,9 @@
 <div>
 Current process definition version: {{processDefinition.version}}
 </div>
+<p>
+<form class="form-inline" ng-submit="migrateVersion()">
+  Enter new version and hit enter:
+  <input class="form-control" type="text" ng-model="newVersion" name="text" />
+  <input class="form-control" type="submit" id="submit" value="Migrate Version" />
+</form>

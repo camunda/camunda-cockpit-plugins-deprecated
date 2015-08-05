@@ -20,6 +20,16 @@ define(['angular'], function(angular) {
       .success(function(processDefinition) {
         $scope.processDefinition = processDefinition;
       });
+    
+    $scope.migrateVersion = function() {
+      console.log('migrate the version to ' + $scope.newVersion + ' now.');
+      var newVersion = {};
+      newVersion.version = $scope.newVersion;
+      console.log(newVersion);
+      console.log($scope.processInstance.id);
+      $http.post(Uri.appUri("plugin://version-migration/:engine/process-instance-migration/" + 
+          $scope.processInstance.id), newVersion);
+    }
   };
 
   VersionMigrationController.$inject = ["$scope", "$http", "Uri"];
