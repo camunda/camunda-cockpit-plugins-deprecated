@@ -2,33 +2,37 @@ define(['angular'], function(angular) {
   
   var ngModule = angular.module('cockpit.plugin.version-migration', []);
   
-//  var ProcessDefinitionResource = function($resource, Uri) {
-//    return $resource(Uri.appUri(
-//        'engine://engine/:engine/process-definition/:processDefinitionId',
-//        {processDefinitionId: '@id'}
-//    ));
-////    ,{get: {isarray: false}}
-//  };
-//  ngModule.factory('ProcessDefinitionResource', ProcessDefinitionResource);
+  var loadProcessDefinition = function(processInstance, $scope, $http, Uri) {
+    $http.get(Uri.appUri("engine://engine/:engine/process-definition/" + processInstance.definitionId))
+    .success(function(processDefinition) {
+      console.log(processDefinition);
+      $scope.processDefinition = processDefinition;
+    });
+  };
   
   var VersionMigrationController = function($scope, $http, Uri) {
 
     console.log('Process instance id', $scope.processInstance.id);
     console.log('process definition id', $scope.processInstance.definitionId);
-
-    $http.get(Uri.appUri("engine://engine/:engine/process-definition/"+$scope.processInstance.definitionId))
-      .success(function(processDefinition) {
-        $scope.processDefinition = processDefinition;
-      });
     
+    loadProcessDefinition($scope.processInstance, $scope, $http, Uri);
+
     $scope.migrateVersion = function() {
-      console.log('migrate the version to ' + $scope.newVersion + ' now.');
-      var newVersion = {};
-      newVersion.version = $scope.newVersion;
-      console.log(newVersion);
-      console.log($scope.processInstance.id);
+      console.log('migrate the version to ' + $scope.newVersion.version + ' now.');
       $http.post(Uri.appUri("plugin://version-migration/:engine/process-instance-migration/" + 
-          $scope.processInstance.id), newVersion);
+          $scope.processInstance.id), $scope.newVersion)
+        .then(function() {
+          $http.get(Uri.appUri("engine://engine/:engine/process-instance/" + $scope.processInstance.id))
+            .success(function(migratedProcessInstance) {
+              console.log(migratedProcessInstance);
+              $scope.processInstance = migratedProcessInstance;
+              loadProcessDefinition(migratedProcessInstance, $scope, $http, Uri);
+              $scope.newVersion = null;
+              // refresh all views?
+              // $scope.processData.set('filter', angular.extend({}, $scope.filter));
+              console.log('version updated');
+            });
+        });
     }
   };
 
