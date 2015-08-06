@@ -1,9 +1,19 @@
-<div>
-Current process definition version: {{processDefinition.version}}
+<div class="container-fluid">
+	<form ng-submit="migrateVersion()">
+		<div class="row">
+			<div class="col-md-3 text-right">Current version:</div>
+			<div class="col-md-2">{{processDefinition.version}}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 text-right">New version:</div>
+			<div class="col-md-2">
+				<input class="form-control" type="text"
+					ng-model="newVersion.version" name="text" />
+			</div>
+			<div class="col-md-4">
+				<input class="form-control, btn" type="submit" id="submit"
+					value="Execute migration" />
+			</div>
+		</div>
+	</form>
 </div>
-<p>
-<form class="form-inline" ng-submit="migrateVersion()">
-  Enter new version and hit enter:
-  <input class="form-control" type="text" ng-model="newVersion.version" name="text" />
-  <input class="form-control" type="submit" id="submit" value="Migrate Version" />
-</form>

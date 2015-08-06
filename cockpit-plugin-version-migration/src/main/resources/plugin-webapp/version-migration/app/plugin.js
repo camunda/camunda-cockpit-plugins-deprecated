@@ -22,16 +22,10 @@ define(['angular'], function(angular) {
       $http.post(Uri.appUri("plugin://version-migration/:engine/process-instance-migration/" + 
           $scope.processInstance.id), $scope.newVersion)
         .then(function() {
-          $http.get(Uri.appUri("engine://engine/:engine/process-instance/" + $scope.processInstance.id))
-            .success(function(migratedProcessInstance) {
-              console.log(migratedProcessInstance);
-              $scope.processInstance = migratedProcessInstance;
-              loadProcessDefinition(migratedProcessInstance, $scope, $http, Uri);
-              $scope.newVersion = null;
-              // refresh all views?
-              // $scope.processData.set('filter', angular.extend({}, $scope.filter));
-              console.log('version updated');
-            });
+          // refresh all views?
+          // $scope.processData.set('filter', angular.extend({}, $scope.filter));
+          window.location.reload();
+          console.log('version updated');
         });
     }
   };
@@ -45,8 +39,6 @@ define(['angular'], function(angular) {
       label: 'Version Migration',
       url: 'plugin://version-migration/static/app/dashboard.html',
       controller: VersionMigrationController,
-
-      // make sure we have a higher priority than the default plugin
       priority: 1
     });
   };
