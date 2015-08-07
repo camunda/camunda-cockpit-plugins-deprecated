@@ -1,9 +1,12 @@
 package com.camunda.consulting.cockpitPluginVersionMigration;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.camunda.consulting.cockpitPluginVersionMigration.resources.VersionMigrationPluginRootResource;
+
 import org.camunda.bpm.cockpit.plugin.spi.impl.AbstractCockpitPlugin;
 
 public class VersionMigrationPlugin extends AbstractCockpitPlugin {
@@ -21,5 +24,10 @@ public class VersionMigrationPlugin extends AbstractCockpitPlugin {
     classes.add(VersionMigrationPluginRootResource.class);
 
     return classes;
+  }
+  
+  @Override
+  public List<String> getMappingFiles() {
+    return Arrays.asList("com.camunda.consulting.cockpitPluginVersionMigration".replace(".", "/") + "/migrate-historic-processinstance-update.xml");
   }
 }
