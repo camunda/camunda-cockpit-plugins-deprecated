@@ -1,19 +1,31 @@
-<div class="container-fluid">
-	<form ng-submit="migrateVersion()">
-		<div class="row">
-			<div class="col-md-3 text-right">Current version:</div>
-			<div class="col-md-2">{{processDefinition.version}}</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3 text-right">New version:</div>
-			<div class="col-md-2">
-				<input class="form-control" type="text"
-					ng-model="newVersion.version" name="text" />
-			</div>
-			<div class="col-md-4">
-				<input class="form-control, btn" type="submit" id="submit"
-					value="Execute migration" />
-			</div>
-		</div>
-	</form>
+<form ng-submit="migrateVersion()">
+
+<div class="help-block">
+	<p>
+	  This Plugin sets this Process Instance to a new version. You are playing with <span title="fire" class="glyphicon glyphicon-fire"></span>!
+	</p> 
+	   
+	<p>    
+	  Make sure you have read and understood the 
+	<a href="https://github.com/camunda/camunda-cockpit-plugins/tree/master/cockpit-plugin-version-migration#risks-and-limitations-of-version-migration">
+	Risks and Limitations</a> before using it.
+	</p>
+	
+	<p>
+	  Current Version: <strong>{{processDefinition.version}}</strong>
+	</p>
 </div>
+  
+
+<p>
+  <strong>Set New Version</strong>
+</p>
+
+<label class="input-group col-md-3">
+  <input ng-model="newVersion.version" type="text" class="form-control">
+  <span class="input-group-addon ng-scope" tooltip="Click here to set version.">
+    <span class="glyphicon glyphicon-ok" ng-click="migrateVersion()"></span>
+  </span>
+</label>	
+    
+</form>
