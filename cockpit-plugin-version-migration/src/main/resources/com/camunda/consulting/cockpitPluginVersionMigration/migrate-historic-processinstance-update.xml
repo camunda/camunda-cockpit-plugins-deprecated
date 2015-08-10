@@ -4,21 +4,10 @@
 
 <mapper namespace="cockpit.version-migration">
 
-  <update id="updateHistoricProcessInstance" parameterType="com.camunda.consulting.cockpitPluginVersionMigration.dto.HistoricProcessInstanceDto">
+  <update id="updateHistoricProcessInstance" parameterType="org.camunda.bpm.engine.impl.persistence.entity.HistoricProcessInstanceEntity">
     update ${prefix}ACT_HI_PROCINST set
       PROC_DEF_ID_ = #{processDefinitionId, jdbcType=VARCHAR}
-    where ID_ = #{id, jdbcType=VARCHAR}
+    where ID_ = #{processInstanceId, jdbcType=VARCHAR}
   </update>
   
-  <resultMap id="processInstanceMap" type="com.camunda.consulting.cockpitPluginVersionMigration.dto.ProcessInstanceDto">
-    <result property="processDefinitionId" column="processDefinitionId_" jdbcType="VARCHAR" />
-  </resultMap>
-
-  <select id="getProcessDefinition" resultMap="processInstanceMap" parameterType="com.camunda.consulting.cockpitPluginVersionMigration.dto.ProcessInstanceDto">
-    select processdefinitionId_ 
-    from ${prefix}ACT_RU_EXECUTION
-    where processInstanceId_ = #{processInstanceId, jdbcType=VARCHAR} 
-    and executionId_ = #{processInstanceId, jdbcType=VARCHAR} 
-  </select>
-
 </mapper>
