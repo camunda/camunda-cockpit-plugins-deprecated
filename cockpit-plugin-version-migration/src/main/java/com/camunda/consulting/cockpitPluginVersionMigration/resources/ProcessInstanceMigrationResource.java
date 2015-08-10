@@ -68,7 +68,7 @@ public class ProcessInstanceMigrationResource extends AbstractCockpitPluginResou
           log.info("History tweaked successfully");
         }
         catch (Throwable ex) {
-          log.log(Level.INFO, "Could not tweak history due to exception", ex);
+          log.log(Level.INFO, "Could not tweak history due to exception. Did you properly install the plugin? If you see a ClassNotFoundException please refer to https://github.com/camunda/camunda-cockpit-plugins/tree/master/cockpit-plugin-version-migration/#how-to-use-it.", ex);
           // Classloading problems!
           // caused by: java.lang.NoClassDefFoundError: org/apache/ibatis/session/SqlSession
           // at com.camunda.consulting.cockpitPluginVersionMigration.resources.ProcessInstanceMigrationResource$1.execute(ProcessInstanceMigrationResource.java:63) [cockpit-plugin-version-migration.jar:]
@@ -76,6 +76,7 @@ public class ProcessInstanceMigrationResource extends AbstractCockpitPluginResou
         return null;
       }
     });
+    getQueryService();
     
   }
 }
