@@ -1,11 +1,13 @@
 Version Migration Plugin
 =========================
 
+Process Definitions are versioned in Camunda, see [Process Versioning](http://docs.camunda.org/7.3/guides/user-guide/#process-engine-process-versioning). 
+
 Sometimes it is necessary to migrate (upgrade) running process instances to a new version, maybe when you have added an important new task or fixed a bug. In this case a running process instances can be migrated to the new version using this command.
 
 Please note that migration can only be applied if a process instance is currently in a persistent wait state, see [Transactions in Processes](http://docs.camunda.org/7.3/guides/user-guide/#process-engine-transactions-in-processes).
 
-*Heads-Up*: This functionality is *not* part of the supported product due to *risks and limitations*, which are mentioned above in more details. Please read this section carefully and test the plugin for your specific use-case, otherwise you have the risk of broken process instances! 
+**DANGER**: This functionality is **not** part of the supported product due to **risks and limitations**, which are mentioned above in more details. Please read this section carefully and test the plugin for your specific use-case, otherwise you have the risk of broken process instances! 
 
 ![Screenshot](screenshot.png)
 
