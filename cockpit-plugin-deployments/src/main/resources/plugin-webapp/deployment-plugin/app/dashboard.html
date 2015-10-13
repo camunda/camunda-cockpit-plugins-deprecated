@@ -3,23 +3,29 @@
     <p>Number of all deployments: <b>{{deploymentCounter.count}}</b>
     </p>
     <form class="form-inline" ng-submit="findDeployments();">
-        <div class="control-group">
-           <p class="input-group">
-           Deployment after: 
-            <input type="text" class="form-control" placeholder="deployed after" datepicker-popup="{{format}}" ng-model="deployedAfter" is-open="openedDeployedAfter" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-              00:00 <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event, 'openedDeployedAfter')"><i class="icon-calendar"></i></button>
-              </span>
-            before: 
-            <input type="text" class="form-control" placeholder="deployed before" datepicker-popup="{{format}}" ng-model="deployedBefore" is-open="openedDeployedBefore" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
-              23:59 <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event, 'openedDeployedBefore')"><i class="icon-calendar"></i></button>
-              </span>
-            <button type="submit" name="Search" class="btn">Search Deployments</button>
-          </p>
-        </div>
+      <div class="input-group">
+        <span class="input-group-addon">Deployment after:</span>
+        <input type="text" class="form-control" placeholder="deployed after" datepicker-popup="{{format}}" ng-model="deployedAfter" is-open="openedDeployedAfter" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+        <span class="input-group-addon ng-scope">00:00</span> 
+        <span class="input-group-btn ng-scope">
+          <button type="button" class="btn btn-default" ng-click="open($event, 'openedDeployedAfter')"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">before:</span> 
+        <input type="text" class="form-control" placeholder="deployed before" datepicker-popup="{{format}}" ng-model="deployedBefore" is-open="openedDeployedBefore" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" />
+        <span class="input-group-addon">23:59</span> 
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="open($event, 'openedDeployedBefore')"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>
+        </span>
+      </div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="submit" name="Search" class="btn">Search Deployments</button>
+        </span>
+      </div>
     </form>
-    
+  <p>
 <style>.table-no-border>thead>tr>th, 
 .table-no-border>tbody>tr>th, 
 .table-no-border>tfoot>tr>th, 
@@ -60,7 +66,7 @@
             ng-model="deployment"
             tooltip-placement="left"
             tooltip="Delete Deployment">
-            <i class="icon-remove-circle"></i>
+            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
           </a>
         </td>
       </tr>

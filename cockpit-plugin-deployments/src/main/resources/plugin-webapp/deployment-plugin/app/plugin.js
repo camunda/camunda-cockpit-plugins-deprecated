@@ -1,4 +1,6 @@
-ngDefine('cockpit.plugin.deployment-plugin', function(module) {
+define(['angular'], function(angular) {
+
+  var ngModule = angular.module('cockpit.plugin.deployment-plugin', []);
 
   var DeploymentResource = function ($resource, Uri) {
     return $resource(Uri.appUri(
@@ -6,7 +8,7 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
         {deploymentId: '@id', before: '@before', after: '@after'}
     ));
   };
-  module.factory('DeploymentResource', DeploymentResource);
+  ngModule.factory('DeploymentResource', DeploymentResource);
 
   var ProcessInstanceCountResource = function ($resource, Uri) {
     return $resource(Uri.appUri(
@@ -14,7 +16,7 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
         {processDefinitionId: '@processDefinitionId'}
     ));
   };
-  module.factory('ProcessInstanceCountResource', ProcessInstanceCountResource);
+  ngModule.factory('ProcessInstanceCountResource', ProcessInstanceCountResource);
 
   var ProcessDefinitionDeploymentResource = function($resource, Uri) {
     return $resource(Uri.appUri(
@@ -22,7 +24,7 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
         {deploymentId: '@deploymentId'}
     ));
   };
-  module.factory('ProcessDefinitionDeploymentResource', ProcessDefinitionDeploymentResource);
+  ngModule.factory('ProcessDefinitionDeploymentResource', ProcessDefinitionDeploymentResource);
 
   var DashboardController = function($scope, $http, Uri, 
       DeploymentResource, ProcessDefinitionDeploymentResource, ProcessInstanceCountResource, $modal) {
@@ -49,6 +51,8 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
     });
 
     $scope.deployments = null;
+    
+    $scope.listDeployments = 
 
     $scope.findDeployments = function() {
       var deployedAfter = new Date($scope.deployedAfter);
@@ -124,9 +128,9 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
 
   Configuration.$inject = ['ViewsProvider'];
 
-  module.config(Configuration);
+  ngModule.config(Configuration);
 
-  module.controller('DeleteDeploymentController', ['$scope', '$location', 'Notifications', 'DeploymentResource', '$modalInstance', 'deployment', 
+  ngModule.controller('DeleteDeploymentController', ['$scope', '$location', 'Notifications', 'DeploymentResource', '$modalInstance', 'deployment', 
                                            function($scope,   $location,   Notifications,   DeploymentResource,   $modalInstance,   deployment) {
 
     console.log("in delete controller " + deployment.id);
@@ -176,9 +180,10 @@ ngDefine('cockpit.plugin.deployment-plugin', function(module) {
       if (status === DELETE_SUCCESS) {
 //        $location.url('/process-definition/' + processInstance.definitionId);
 //        $location.replace();
+//        $scope.findDeployments(); // is not a function
         console.log("refresh deployments");
       }
     };
-  }]);  return module;
+  }]);  return ngModule;
 
 });
