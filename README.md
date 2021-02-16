@@ -1,7 +1,9 @@
-Camunda Cockpit Plugins
+Camunda Cockpit Plugins (DEPRECATED)
 =======================
 
-This repository contains a collection of plugins for Camunda Cockpit, which have been developed by the Camunda BPM community and Camunda's consulting team.
+This repository contains a deprecated collection of plugins for Camunda Cockpit, which have been developed by the Camunda's consulting team quite some time ago. 
+
+Kept here for referece, but **please do not use for any new project!*
 
 
 How to use a Cockpit plugin
